@@ -10,17 +10,17 @@ var defaults = require('defaults');
 function timestampsPlugin(schema, options) {
     var updatedAt = 'updatedAt';
     var createdAt = 'createdAt';
-    var updatedAtOpts = Date;
-    var createdAtOpts = Date;
+    var updatedAtOpts = String;
+    var createdAtOpts = String;
     var dataObj = {};
 
     if (typeof options === 'object') {
         if (typeof options.updatedAt === 'string') {
-           updatedAt = options.updatedAt;
+            updatedAt = options.updatedAt;
         } else if (typeof options.updatedAt === 'object') {
             updatedAtOpts = defaults(options.updatedAt, {
                 name: updatedAt,
-                type: Date
+                type: String
             });
             updatedAt = updatedAtOpts.name;
         }
@@ -30,7 +30,7 @@ function timestampsPlugin(schema, options) {
         } else if (typeof options.createdAt === 'object') {
             createdAtOpts = defaults(options.createdAt, {
                 name: createdAt,
-                type: Date
+                type: String
             });
             createdAt = createdAtOpts.name;
         }
@@ -45,19 +45,19 @@ function timestampsPlugin(schema, options) {
             schema.add(dataObj);
         }
         if (schema.virtual(createdAt).get) {
-          schema.virtual(createdAt)
-              .get( function () {
-                  if (this["_" + createdAt]) return this["_" + createdAt];
-                  return this["_" + createdAt] = this._id.getTimestamp();
-              });
+            schema.virtual(createdAt)
+                .get( function () {
+                    if (this["_" + createdAt]) return this["_" + createdAt];
+                    return this["_" + createdAt] = this._id.getTimestamp();
+                });
         }
         schema.pre('save', function(next) {
             if (this.isNew) {
-                var newDate = new Date;
+                var newDate = Math.floor(new Date() / 1000);
                 if (createdAt) this[createdAt] = newDate;
                 if (updatedAt) this[updatedAt] = newDate;
             } else if (this.isModified() && updatedAt) {
-                this[updatedAt] = new Date;
+                this[updatedAt] = Math.floor(new Date() / 1000);
             }
             next();
         });
@@ -71,11 +71,11 @@ function timestampsPlugin(schema, options) {
         }
         schema.pre('save', function(next) {
             if (!this[createdAt]) {
-                var newDate = new Date;
+                var newDate = Math.floor(new Date() / 1000);
                 if (createdAt) this[createdAt] = newDate;
                 if (updatedAt) this[updatedAt] = newDate;
             } else if (this.isModified() && updatedAt) {
-                this[updatedAt] = new Date;
+                this[updatedAt] = Math.floor(new Date() / 1000);
             }
             next();
         });
@@ -83,11 +83,11 @@ function timestampsPlugin(schema, options) {
 
     schema.pre('findOneAndUpdate', function(next) {
     if (this.op === 'findOneAndUpdate') {
-        var newDate = new Date;
+        var newDate = Math.floor(new Date() / 1000);
         this._update = this._update || {};
         if (createdAt) {
             if (this._update[createdAt]) {
-              delete this._update[createdAt];
+                delete this._update[createdAt];
             }
 
             this._update['$setOnInsert'] = this._update['$setOnInsert'] || {};
@@ -102,11 +102,11 @@ function timestampsPlugin(schema, options) {
 
     schema.pre('update', function(next) {
     if (this.op === 'update') {
-        var newDate = new Date;
+        var newDate = Math.floor(new Date() / 1000);
         this._update = this._update || {};
         if (createdAt) {
             if (this._update[createdAt]) {
-              delete this._update[createdAt];
+                delete this._update[createdAt];
             }
 
             this._update['$setOnInsert'] = this._update['$setOnInsert'] || {};
@@ -121,7 +121,7 @@ function timestampsPlugin(schema, options) {
 
     if(!schema.methods.hasOwnProperty('touch') && updatedAt)
     schema.methods.touch = function(callback){
-        this[updatedAt] = new Date;
+        this[updatedAt] = Math.floor(new Date() / 1000);
         this.save(callback);
     }
 
