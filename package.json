@@ -1,7 +1,7 @@
 {
   "name": "mongoose-timestamp-date-unix",
   "description": "Mongoose plugin that adds createdAt and updatedAt auto-assigned date properties (only date) with UNIX format",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Kamonwat Sangudsub <kamonwat_s@cmu.ac.th>",
   "keywords": [
     "mongodb",
