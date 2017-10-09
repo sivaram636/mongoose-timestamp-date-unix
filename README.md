@@ -1,23 +1,20 @@
-Mongoose Timestamps Plugin
+Mongoose Timestamps Date Unix Plugin
 ==========================
 
-[![Build Status](https://travis-ci.org/drudge/mongoose-timestamp.svg?branch=master)](https://travis-ci.org/drudge/mongoose-timestamp)
-[![Dependency Status](https://david-dm.org/drudge/mongoose-timestamp.svg)](https://david-dm.org/drudge/mongoose-timestamp)
-[![devDependency Status](https://david-dm.org/drudge/mongoose-timestamp/dev-status.svg)](https://david-dm.org/drudge/mongoose-timestamp#info=devDependencies)
-[![Downloads Monthly](https://img.shields.io/npm/dm/mongoose-timestamp.svg)](https://www.npmjs.com/package/mongoose-timestamp)
-[![Downloads Total](https://img.shields.io/npm/dt/mongoose-timestamp.svg)](https://www.npmjs.com/package/mongoose-timestamp)
+[![Downloads Monthly](https://img.shields.io/npm/dm/mongoose-timestamp.svg)](https://www.npmjs.com/package/mongoose-timestamp-date-unix)
+[![Downloads Total](https://img.shields.io/npm/dt/mongoose-timestamp.svg)](https://www.npmjs.com/package/mongoose-timestamp-date-unix)
 
 Simple plugin for [Mongoose](https://github.com/LearnBoost/mongoose) which adds `createdAt` and `updatedAt` date attributes
 that get auto-assigned to the most recent create/update timestamp.
 
 ## Installation
 
-`npm install mongoose-timestamp`
+`npm install mongoose-timestamp-date-unix`
 
 ## Usage
 
 ```javascript
-var timestamps = require('mongoose-timestamp');
+var timestamps = require('mongoose-timestamp-date-unix');
 var UserSchema = new Schema({
     username: String
 });
