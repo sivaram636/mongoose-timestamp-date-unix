@@ -10,8 +10,8 @@ var defaults = require('defaults');
 function timestampsPlugin(schema, options) {
     var updatedAt = 'updatedAt';
     var createdAt = 'createdAt';
-    var updatedAtOpts = String;
-    var createdAtOpts = String;
+    var updatedAtOpts = Number;
+    var createdAtOpts = Number;
     var dataObj = {};
 
     if (typeof options === 'object') {
@@ -20,7 +20,7 @@ function timestampsPlugin(schema, options) {
         } else if (typeof options.updatedAt === 'object') {
             updatedAtOpts = defaults(options.updatedAt, {
                 name: updatedAt,
-                type: String
+                type: Number
             });
             updatedAt = updatedAtOpts.name;
         }
@@ -30,7 +30,7 @@ function timestampsPlugin(schema, options) {
         } else if (typeof options.createdAt === 'object') {
             createdAtOpts = defaults(options.createdAt, {
                 name: createdAt,
-                type: String
+                type: Number
             });
             createdAt = createdAtOpts.name;
         }
